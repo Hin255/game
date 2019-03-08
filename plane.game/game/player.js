@@ -1,5 +1,4 @@
-let Player = function(img) {
-    let image = img
+let Player = function(image) {
     let moveLeft = function() {
         if (o.x > 0) {
             o.x -= o.speed
@@ -7,7 +6,7 @@ let Player = function(img) {
     }
 
     let moveRight = function() {
-        if (o.x < 400 - o.image.width) {
+        if (o.x < 300 - o.image.width) {
             o.x += o.speed
         }
     }
@@ -41,6 +40,7 @@ let Player = function(img) {
         moveRight: moveRight,
         moveUp: moveUp,
         moveDown: moveDown,
+        bullets : [],
     }
     return o
 }

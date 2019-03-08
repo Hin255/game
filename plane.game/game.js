@@ -1,53 +1,49 @@
-let GuaGame = function(fps, scene) {
-
-    let g = {
-        actions: {},
-        keydowns: {},
-        scene: scene,
+class Game {
+    constructor(fps, scene) {
+        this.actions = {}
+        this.keydowns = {}
+        this.scene = scene
+        this.fps = fps
     }
 
-    window.addEventListener('keydown', function(event) {
-        //游戏时间和场景自己的事件
-        g.keydowns[event.key] = true
-        g.scene.keydowns[event.key] = true
-    })
-
-    window.addEventListener('keyup', function(event) {
-        g.keydowns[event.key] = false
-        g.scene.keydowns[event.key] = false
-
-    })
-
-    g.draw = function() {
-        if (!g.paused) {
-            g.scene.draw()
+    draw() {
+        if (!this.scene.paused) {
+            this.scene.draw()
         }
     }
 
-    g.update = function() {
-        if (!g.paused) {
-            g.scene.update()
+    update() {
+        if (!this.scene.paused) {
+            this.scene.update()
         }
     }
 
-    g.registerAction = function(key, callback) {
-        g.actions[key] = callback
+    registerAction(key, callback) {
+        this.actions[key] = callback
     }
 
-    g.registerAction('k', function() {
-        g.scene.kill()
-        let m = mainScene()
-        g.scene = m
-    })
+    init() {
+        let g = this
+        window.addEventListener('keydown', function(event) {
+            //游戏事件和场景自己的按键监听事件
+            g.keydowns[event.key] = true
+            g.scene.keydowns[event.key] = true
+        })
 
-    g.registerAction('r', function() {
-        if (!g.scene.alive) {
-            let t = TitleScene()
-            g.scene = t
-        }
-    })
+        window.addEventListener('keyup', function(event) {
+            g.keydowns[event.key] = false
+            g.scene.keydowns[event.key] = false
 
-    g.runloop = function() {
+        })
+
+        this.registerAction('k', function() {
+            let m = mainScene()
+            g.scene = m
+        })
+    }
+
+    runloop() {
+        let g = this
         let scene_actions = Object.keys(g.scene.actions)
         for (let index = 0; index < scene_actions.length; index++) {
             const key = scene_actions[index]
@@ -62,21 +58,17 @@ let GuaGame = function(fps, scene) {
                 g.actions[key]()
             }
         }
-
         clearCanvas()
         g.draw()
         g.update()
             //next run loop
         setTimeout(function() {
             g.runloop()
-        }, 1000 / fps)
+        }, 1000 / this.fps)
     }
 
-    g.run = function() {
-        setTimeout(function() {
-            g.runloop()
-        }, 1000 / fps)
+    run() {
+        this.init()
+        setTimeout( () => this.runloop(), 1000 / this.fps)
     }
-
-    return g
 }

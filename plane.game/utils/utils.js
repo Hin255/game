@@ -15,7 +15,6 @@ let collide = function(rect1,rect2) {
     let minY = rect1.y <= rect2.y ? rect1.y : rect2.y
 
     if(maxX - minX <= rect1.image.width+rect2.image.width && maxY - minY <= rect1.image.height+rect2.image.height){
-        log('碰撞')
         return true
     }else{
         return false

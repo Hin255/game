@@ -1,10 +1,10 @@
-let Bomb = function(image) {
+let Sky = function(image) {
     o = {
         image: image,
         w: image.width,
         h: image.height,
-        x: 80,
-        y: 80,
+        x: 0,
+        y: 0,
     }
 
     return o
