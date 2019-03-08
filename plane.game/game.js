@@ -4,6 +4,7 @@ class Game {
         this.keydowns = {}
         this.scene = scene
         this.fps = fps
+        this.init()
     }
 
     draw() {
@@ -23,52 +24,55 @@ class Game {
     }
 
     init() {
-        let g = this
+        let self = this
         window.addEventListener('keydown', function(event) {
             //游戏事件和场景自己的按键监听事件
-            g.keydowns[event.key] = true
-            g.scene.keydowns[event.key] = true
+            self.keydowns[event.key] = true
+            self.scene.keydowns[event.key] = true
         })
 
         window.addEventListener('keyup', function(event) {
-            g.keydowns[event.key] = false
-            g.scene.keydowns[event.key] = false
+            self.keydowns[event.key] = false
+            self.scene.keydowns[event.key] = false
 
         })
 
         this.registerAction('k', function() {
             let m = mainScene()
-            g.scene = m
+            self.scene = m
         })
     }
 
     runloop() {
-        let g = this
-        let scene_actions = Object.keys(g.scene.actions)
+        let scene_actions = Object.keys(this.scene.actions)
         for (let index = 0; index < scene_actions.length; index++) {
             const key = scene_actions[index]
-            if (g.scene.keydowns[key]) {
-                g.scene.actions[key]()
+            if (this.scene.keydowns[key]) {
+                this.scene.actions[key]()
             }
         }
-        let game_actions = Object.keys(g.actions)
+        let game_actions = Object.keys(this.actions)
         for (let index = 0; index < game_actions.length; index++) {
             const key = game_actions[index]
-            if (g.keydowns[key]) {
-                g.actions[key]()
+            if (this.keydowns[key]) {
+                this.actions[key]()
             }
         }
         clearCanvas()
-        g.draw()
-        g.update()
+        this.draw()
+        this.update()
             //next run loop
-        setTimeout(function() {
-            g.runloop()
+        this.timeOut()
+    }
+
+    timeOut() {
+        let self = this
+        window.setTimeout(function() {
+            self.runloop()
         }, 1000 / this.fps)
     }
 
     run() {
-        this.init()
-        setTimeout( () => this.runloop(), 1000 / this.fps)
+        this.timeOut()
     }
 }
