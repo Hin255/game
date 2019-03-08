@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>game 1</title>
+    <style>
+        #id-canvas {
+            border: 1px black solid;
+        }
+
+        #id-input {
+            display: block;
+        }
+
+        .button {
+            text-align: center;
+            width: 100px;
+            height: 30px;
+            border-radius: 20%;
+            display: inline-block;
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="id-canvas" width="400" height="300"></canvas>
+    <input id="id-input" type="range" name="name" value="20">
+    <hr>
+</body>
+<script src="canvas/canvas.js"></script>
+<script src="utils/utils.js"></script>
+<script src="game/paddle.js"></script>
+<script src="game/ball.js"></script>
+<script src="game/block.js"></script>
+<script src="level/level.js"></script>
+<script src="scene/end_scene.js"></script>
+<script src="scene/scene.js"></script>
+<script src="scene/title_scene.js"></script>
+<script src="scene/edit_scene.js"></script>
+<script src="game.js"></script>
+<script src="main.js"></script>
+</html>
