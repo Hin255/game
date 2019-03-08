@@ -1,11 +1,7 @@
-let Bomb = function(image) {
-    o = {
-        image: image,
-        w: image.width,
-        h: image.height,
-        x: 80,
-        y: 80,
+class Bomb {
+    constructor(image) {
+        this.image = image
+        this.x = 0
+        this.y = 0
     }
-
-    return o
 }

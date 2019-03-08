@@ -1,46 +1,37 @@
-let Player = function(image) {
-    let moveLeft = function() {
-        if (o.x > 0) {
-            o.x -= o.speed
+class Player {
+    constructor(image) {
+        this.image = image
+        this.x = 100
+        this.y = 260
+        this.speed = 5
+        this.alive = true
+    }
+
+    moveLeft() {
+        if (this.x > 0) {
+            this.x -= this.speed
         }
     }
 
-    let moveRight = function() {
-        if (o.x < 300 - o.image.width) {
-            o.x += o.speed
+    moveRight() {
+        if (this.x < 300 - this.image.width) {
+            this.x += this.speed
         }
     }
 
-    let moveUp = function() {
-        if (o.y > 0) {
-            o.y -= o.speed
+    moveUp() {
+        if (this.y > 0) {
+            this.y -= this.speed
         }
     }
 
-    let moveDown = function() {
-        if (o.y < 500 - o.image.width) {
-            o.y += o.speed
+    moveDown() {
+        if (this.y < 500 - this.image.width) {
+            this.y += this.speed
         }
     }
 
-    let kill = function() {
-        o.alive = !o.alive
+    kill() {
+        this.alive = !this.alive
     }
-
-    let o = {
-        image: image,
-        w: image.width,
-        h: image.height,
-        x: 100,
-        y: 260,
-        speed: 5,
-        alive: true,
-        kill: kill,
-        moveLeft: moveLeft,
-        moveRight: moveRight,
-        moveUp: moveUp,
-        moveDown: moveDown,
-        bullets : [],
-    }
-    return o
 }

@@ -10,12 +10,12 @@ class MainScene extends Scene {
             sky: 'img/sky.png',
             cloud: 'img/cloud.png',
         }
-        this.player = Player(this.imageByName('player'))
-        this.bullet = Bullet(this.imageByName('bullet'))
-        this.bomb = Bomb(this.imageByName('bomb'))
-        this.sky = Sky(this.imageByName('sky'))
+        this.player = new Player(this.imageByName('player'))
+        this.bullet = new Bullet(this.imageByName('bullet'))
+        this.bomb = new Bomb(this.imageByName('bomb'))
+        this.sky = new Sky(this.imageByName('sky'))
         // this.cloud = Cloud(this.imageByName('cloud'))
-        this.enemy = Enemy(this.imageByName('enemy'))
+        this.enemy = new Enemy(this.imageByName('enemy'))
         this.init()
     }
 
@@ -36,28 +36,29 @@ class MainScene extends Scene {
     }
 
     eventRegister() {
+        let self = this
         this.registerAction('a', function() {
-            this.player.moveLeft()
-        }.bind(this))
+            self.player.moveLeft()
+        })
 
         this.registerAction('d', function() {
-            this.player.moveRight()
-        }.bind(this))
+            self.player.moveRight()
+        })
 
         this.registerAction('w', function() {
-            this.player.moveUp()
-        }.bind(this))
+            self.player.moveUp()
+        })
 
         this.registerAction('s', function() {
-            this.player.moveDown()
-        }.bind(this))
+            self.player.moveDown()
+        })
 
         this.registerAction('f', function() {
-            this.bullet.fire()
-        }.bind(this))
+            self.bullet.fire()
+        })
 
         this.registerAction('p', function() {
-            this.paused = !this.paused
-        }.bind(this))
+            self.paused = !this.paused
+        })
     }
 }
