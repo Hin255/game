@@ -8,8 +8,16 @@ class Scene {
         this.images = {}
     }
 
+    init() {
+
+    }
+
     addElement(element) {
         this.elements.push(element)
+    }
+
+    removeElement(element) {
+        this.elements.pop(element)
     }
 
     draw() {
@@ -19,17 +27,10 @@ class Scene {
         }
     }
 
-    update() {
-    }
+    update() {}
 
     registerAction(key, callback) {
         this.actions[key] = callback
-    }
-
-    imageByName(name) {
-        let img = this.images[name]
-        let image = imageFromPath(img)
-        return image
     }
 
     kill() {

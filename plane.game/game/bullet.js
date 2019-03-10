@@ -1,28 +1,31 @@
-class Bullet {
-    constructor(image) {
-        this.image = image
-        this.x = 0
-        this.y = 0
-        this.speedX = 5
-        this.speedY = 5
-        this.fired = false
-        this.alive = true
-
+class Bullet extends ImageSource {
+    constructor() {
+        super('bullet')
+        this.setup()
     }
 
-    moveUp() {
-        this.y -= this.speedY
+    setup() {
+        this.speed = 3
+        this.alive = true
+    }
+
+    position(player) {
+        this.x = player.x + player.image.width / 2
+        this.y = player.y
+    }
+
+    reset(palyer) {
+        if (this.y < 1) {
+            this.position(palyer)
+        }
+    }
+
+    move() {
+        this.y -= this.speed
     }
 
     kill() {
         this.alive = !this.alive
     }
 
-    fire() {
-        this.fired = true
-    }
-
-    launched() {
-
-    }
 }

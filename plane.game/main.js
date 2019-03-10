@@ -4,7 +4,7 @@ let __main = function() {
     // 但是自己draw的逻辑由自己实现
     // 每个scene画面应该由每个scene自己完成
     let scene = new MainScene()
-    let game = new Game(30, scene)
+    let game = new Game(60, scene)
     game.run()
 }
 

@@ -1,10 +1,31 @@
-class Player {
-    constructor(image) {
-        this.image = image
+class Player extends ImageSource {
+    constructor() {
+        super('player')
+        this.setup()
+    }
+
+    setup() {
         this.x = 100
-        this.y = 260
-        this.speed = 5
-        this.alive = true
+        this.y = 450
+        this.speed = 10
+        this.fired = false
+        this.cooldown = 20
+    }
+
+    fire() {
+        this.fired = true
+    }
+
+    bullet() {
+        this.cooldown = this.cooldown - 1
+        if (this.cooldown == 0) {
+            this.cooldown = 20
+            let b = new Bullet()
+            b.position(this)
+            return b
+        } else {
+            return null
+        }
     }
 
     moveLeft() {
@@ -29,9 +50,5 @@ class Player {
         if (this.y < 500 - this.image.width) {
             this.y += this.speed
         }
-    }
-
-    kill() {
-        this.alive = !this.alive
     }
 }

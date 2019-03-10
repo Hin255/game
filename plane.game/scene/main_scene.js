@@ -1,64 +1,85 @@
 class MainScene extends Scene {
     constructor() {
         super()
-        this.score = 0
-        this.images = {
-            bomb: 'img/bomb.png',
-            bullet: 'img/bullet.png',
-            player: 'img/player.png',
-            enemy: 'img/enemy.png',
-            sky: 'img/sky.png',
-            cloud: 'img/cloud.png',
-        }
-        this.player = new Player(this.imageByName('player'))
-        this.bullet = new Bullet(this.imageByName('bullet'))
-        this.bomb = new Bomb(this.imageByName('bomb'))
-        this.sky = new Sky(this.imageByName('sky'))
-        // this.cloud = Cloud(this.imageByName('cloud'))
-        this.enemy = new Enemy(this.imageByName('enemy'))
-        this.init()
+        this.setup()
     }
 
-    init() {
-        this.addElement(this.player)
-        this.addElement(this.enemy)
-        // this.addElement(this.cloud)
-        // this.addElement(this.bullet)
-        // let enemy = this.imageByName('enemy')
-        // this.enemy = Enemy(enemy)
+    setup() {
+        this.score = 0
+        this.numberOfEnemys = 10
+        this.enemys = []
+        this.player = new Player()
+        this.sky = new Sky()
+        this.bullets = []
 
-        // 主场景事件注册
+        this.addElement(this.sky)
+        this.addElement(this.player)
+        this.addEnemys()
+
         this.eventRegister()
     }
 
+    addEnemys() {
+        for (let i = 0; i < this.numberOfEnemys; i++) {
+            const enemy = new Enemy()
+            this.addElement(enemy)
+            this.enemys.push(enemy)
+        }
+    }
+
+    addBullet() {
+        let bullet = this.player.bullet()
+        if (bullet) {
+            this.bullets.push(bullet)
+            this.addElement(bullet)
+        }
+    }
+
     update() {
-        this.enemy.move()
+        if (this.player.fired) {
+            this.addBullet()
+        }
+
+        for (let i = 0; i < this.bullets.length; i++) {
+            let e = this.bullets[i]
+            e.move()
+        }
+
+        for (let i = 0; i < this.enemys.length; i++) {
+            const e = this.enemys[i]
+            e.move()
+            e.reset()
+        }
+        // this.bullet.move()
     }
 
     eventRegister() {
         let self = this
-        this.registerAction('a', function() {
-            self.player.moveLeft()
-        })
-
-        this.registerAction('d', function() {
-            self.player.moveRight()
-        })
-
-        this.registerAction('w', function() {
-            self.player.moveUp()
-        })
-
-        this.registerAction('s', function() {
-            self.player.moveDown()
-        })
-
-        this.registerAction('f', function() {
-            self.bullet.fire()
-        })
-
-        this.registerAction('p', function() {
-            self.paused = !this.paused
-        })
+        let chars = 'adwsfp'
+        for (let i = 0; i < chars.length; i++) {
+            const c = chars[i]
+            this.registerAction(c, function() {
+                switch (c) {
+                    case 'a':
+                        self.player.moveLeft()
+                        break
+                    case 'd':
+                        self.player.moveRight()
+                        break
+                    case 'w':
+                        self.player.moveUp()
+                        break
+                    case 's':
+                        self.player.moveDown()
+                        break
+                    case 'f':
+                        self.player.fire()
+                        break
+                    case 'p':
+                        self.paused = !this.paused
+                        break
+                }
+            })
+        }
     }
 }

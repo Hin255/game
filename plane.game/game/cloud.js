@@ -1,7 +1,10 @@
-class Cloud {
-    constructor(image) {
-        this.image = image
-        this.x = 0
-        this.y = 0
+class Cloud extends ImageSource {
+    constructor() {
+        super('cloud')
+    }
+
+    setup() {
+        this.x = 100
+        this.y = 200
     }
 }

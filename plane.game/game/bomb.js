@@ -1,7 +1,11 @@
-class Bomb {
-    constructor(image) {
-        this.image = image
-        this.x = 0
-        this.y = 0
+class Bomb extends ImageSource {
+    constructor() {
+        super('bomb')
+        this.setup()
+    }
+
+    setup() {
+        this.x = 200
+        this.y = 200
     }
 }
