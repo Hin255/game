@@ -8,9 +8,7 @@ class Game {
     }
 
     draw() {
-        if (!this.scene.paused) {
-            this.scene.draw()
-        }
+        this.scene.draw()
     }
 
     update() {

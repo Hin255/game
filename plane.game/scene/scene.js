@@ -6,11 +6,11 @@ class Scene {
         this.alive = true
         this.paused = false
         this.images = {}
+        this.init()
+        this.allStatus = []
     }
 
-    init() {
-
-    }
+    init() {}
 
     addElement(element) {
         this.elements.push(element)
@@ -20,6 +20,10 @@ class Scene {
         this.elements.pop(element)
     }
 
+    addStatus(update) {
+        this.allStatus.push(update)
+    }
+
     draw() {
         for (let i = 0; i < this.elements.length; i++) {
             const e = this.elements[i]
@@ -27,7 +31,12 @@ class Scene {
         }
     }
 
-    update() {}
+    update() {
+        for (let i = 0; i < this.allStatus.length; i++) {
+            let status = this.allStatus[i]
+            status()
+        }
+    }
 
     registerAction(key, callback) {
         this.actions[key] = callback

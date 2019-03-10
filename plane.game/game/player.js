@@ -8,12 +8,18 @@ class Player extends ImageSource {
         this.x = 100
         this.y = 450
         this.speed = 10
+        this.bullets = []
         this.fired = false
         this.cooldown = 20
+        this.alive = true
     }
 
     fire() {
         this.fired = true
+    }
+
+    kill() {
+        this.alive = !this.alive
     }
 
     bullet() {
@@ -22,6 +28,7 @@ class Player extends ImageSource {
             this.cooldown = 20
             let b = new Bullet()
             b.position(this)
+            this.bullets.push(b)
             return b
         } else {
             return null

@@ -2,6 +2,7 @@ class Enemy extends ImageSource {
     constructor() {
         super('enemy')
         this.setup()
+        this.duration = 1
     }
 
     setup() {
@@ -13,6 +14,13 @@ class Enemy extends ImageSource {
         this.alive = true
     }
 
+    position() {
+        let bomb = new Bomb()
+        bomb.x = this.x
+        bomb.y = this.y
+        return bomb
+    }
+
     reset() {
         if (this.y > 500) {
             this.setup()
@@ -20,9 +28,9 @@ class Enemy extends ImageSource {
     }
 
     kill() {
-        this.alive = !this.alive
+        this.alive = false
+        this.setup()
     }
-
 
     move() {
         this.y += this.speed

@@ -10,13 +10,15 @@ class MainScene extends Scene {
         this.enemys = []
         this.player = new Player()
         this.sky = new Sky()
-        this.bullets = []
+        this.addAllElement()
+        this.eventRegister()
+        this.status()
+    }
 
+    addAllElement() {
         this.addElement(this.sky)
         this.addElement(this.player)
         this.addEnemys()
-
-        this.eventRegister()
     }
 
     addEnemys() {
@@ -27,30 +29,65 @@ class MainScene extends Scene {
         }
     }
 
-    addBullet() {
-        let bullet = this.player.bullet()
-        if (bullet) {
-            this.bullets.push(bullet)
-            this.addElement(bullet)
-        }
-    }
-
-    update() {
-        if (this.player.fired) {
-            this.addBullet()
-        }
-
-        for (let i = 0; i < this.bullets.length; i++) {
-            let e = this.bullets[i]
-            e.move()
-        }
-
+    resetEnemys() {
         for (let i = 0; i < this.enemys.length; i++) {
-            const e = this.enemys[i]
+            let e = this.enemys[i]
+            if (!e.alive) {
+                e.kill()
+            }
             e.move()
             e.reset()
         }
-        // this.bullet.move()
+    }
+
+    enemyAndbulletCollide() {
+        for (let i = 0; i < this.enemys.length; i++) {
+            let e = this.enemys[i]
+            for (let i = 0; i < this.player.bullets.length; i++) {
+                let b = this.player.bullets[i]
+                if (collide(e, b)) {
+                    let bomb = e.position()
+                    this.addElement(bomb)
+                    e.kill()
+                    for (let i = 0; i <= e.duration; i++) {
+                        log(i, e.duration)
+                        if (i == e.duration) {
+                            this.removeElement(bomb)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    updateBullets() {
+        if (this.player.fired) {
+            let bullet = this.player.bullet()
+            if (bullet) {
+                this.addElement(bullet)
+            }
+        }
+
+        for (let i = 0; i < this.player.bullets.length; i++) {
+            let b = this.player.bullets[i]
+            if (!b.alive) {
+                // this.removeElement(b)
+            }
+            b.move()
+        }
+
+    }
+
+    status() {
+        this.addStatus(this.update)
+    }
+
+    update() {
+        this.resetEnemys()
+        this.updateBullets()
+        this.enemyAndbulletCollide()
+            //检测碰撞
+
     }
 
     eventRegister() {
@@ -74,9 +111,6 @@ class MainScene extends Scene {
                         break
                     case 'f':
                         self.player.fire()
-                        break
-                    case 'p':
-                        self.paused = !this.paused
                         break
                 }
             })
