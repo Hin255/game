@@ -1,6 +1,7 @@
 class Enemy extends ImageSource {
     constructor() {
         super('enemy')
+        this.cooldown = 20
         this.setup()
     }
 
@@ -11,6 +12,19 @@ class Enemy extends ImageSource {
         this.y = y
         this.speed = randomBetween(1, 4)
         this.alive = true
+    }
+
+    bullet() {
+        this.cooldown = this.cooldown - 1
+        if (this.cooldown == 0) {
+            this.cooldown = 20
+            let b = new Bullet()
+            b.position(this)
+            this.bullets.push(b)
+            return b
+        } else {
+            return null
+        }
     }
 
     position() {

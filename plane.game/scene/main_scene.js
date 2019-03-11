@@ -82,7 +82,6 @@ class MainScene extends Scene {
         this.updateBullets()
         //检测碰撞
         this.enemyAndbulletCollide()
-        log(this.elements.length)
     }
 
     eventRegister() {
