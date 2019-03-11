@@ -17,7 +17,13 @@ class Scene {
     }
 
     removeElement(element) {
-        this.elements.pop(element)
+        for (let i = 0; i < this.elements.length; i++) {
+            let e = this.elements[i]
+            if (element === e) {
+                this.elements.pop(element)
+            }
+
+        }
     }
 
     addStatus(update) {

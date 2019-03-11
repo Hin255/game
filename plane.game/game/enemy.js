@@ -2,7 +2,6 @@ class Enemy extends ImageSource {
     constructor() {
         super('enemy')
         this.setup()
-        this.duration = 1
     }
 
     setup() {

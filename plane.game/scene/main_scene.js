@@ -9,7 +9,6 @@ class MainScene extends Scene {
         this.enemys = []
         this.player = new Player()
         this.text = new SceneText()
-        log(this.text)
         this.sky = new Sky()
         this.addAllElement()
         this.eventRegister()
@@ -48,15 +47,10 @@ class MainScene extends Scene {
             for (let i = 0; i < this.player.bullets.length; i++) {
                 let b = this.player.bullets[i]
                 if (collide(e, b)) {
-                    let bomb = e.position()
-                    this.addElement(bomb)
-                    e.kill()
                     this.text.update(100)
-                    for (let i = 0; i <= e.duration; i++) {
-                        if (i == e.duration) {
-                            this.removeElement(bomb)
-                        }
-                    }
+                    let bomb = e.position()
+                    // this.addElement(bomb)
+                    e.kill()
                 }
             }
         }
@@ -67,17 +61,16 @@ class MainScene extends Scene {
             let bullet = this.player.bullet()
             if (bullet) {
                 this.addElement(bullet)
+                this.player.bullets.push(bullet)
+            }
+            for (let i = 0; i < this.player.bullets.length; i++) {
+                let b = this.player.bullets[i]
+                b.move()
+                if (b.y < 0) {
+                    // this.removeElement(b)
+                }
             }
         }
-
-        for (let i = 0; i < this.player.bullets.length; i++) {
-            let b = this.player.bullets[i]
-            if (!b.alive) {
-                // this.removeElement(b)
-            }
-            b.move()
-        }
-
     }
 
     status() {
@@ -89,6 +82,7 @@ class MainScene extends Scene {
         this.updateBullets()
         //检测碰撞
         this.enemyAndbulletCollide()
+        log(this.elements.length)
     }
 
     eventRegister() {
