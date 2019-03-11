@@ -5,10 +5,11 @@ class MainScene extends Scene {
     }
 
     setup() {
-        this.score = 0
         this.numberOfEnemys = 10
         this.enemys = []
         this.player = new Player()
+        this.text = new SceneText()
+        log(this.text)
         this.sky = new Sky()
         this.addAllElement()
         this.eventRegister()
@@ -19,6 +20,7 @@ class MainScene extends Scene {
         this.addElement(this.sky)
         this.addElement(this.player)
         this.addEnemys()
+        this.addElement(this.text)
     }
 
     addEnemys() {
@@ -49,8 +51,8 @@ class MainScene extends Scene {
                     let bomb = e.position()
                     this.addElement(bomb)
                     e.kill()
+                    this.text.update(100)
                     for (let i = 0; i <= e.duration; i++) {
-                        log(i, e.duration)
                         if (i == e.duration) {
                             this.removeElement(bomb)
                         }
@@ -85,9 +87,8 @@ class MainScene extends Scene {
     update() {
         this.resetEnemys()
         this.updateBullets()
+        //检测碰撞
         this.enemyAndbulletCollide()
-            //检测碰撞
-
     }
 
     eventRegister() {

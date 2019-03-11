@@ -1,12 +1,10 @@
-let log = console.log.bind(console)
+const log = console.log.bind(console)
 
-let imageFromPath = function(path) {
+const imageFromPath = function(path) {
     let image = new Image()
     image.src = path
     return image
 }
-
-
 
 const collide = function(rect1, rect2) {
     let maxX = rect1.x + rect1.image.width >= rect2.x + rect2.image.width ?
@@ -27,17 +25,4 @@ const collide = function(rect1, rect2) {
 const randomBetween = function(min, max) {
     let n = Math.random() * (max - min) + min;
     return Math.floor(n)
-}
-
-let loadLevel = function(n, img) {
-    n = n - 1
-    let blocks = []
-    let level = levels[n]
-    for (let index = 0; index < level.length; index++) {
-        const p = level[index]
-        b = Block(p, img)
-        blocks.push(b)
-    }
-
-    return blocks
 }
